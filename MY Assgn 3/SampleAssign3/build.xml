@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project name="Cst420 Assign3. Threaded (java) music server with objc client."
+         default="targets" basedir="."
+         xmlns:dn="antlib:org.apache.ant.dotnet"
+         xmlns="antlib:org.apache.tools.ant"
+         xmlns:cpptasks="antlib:net.sf.antcontrib.cpptasks">
+
+   <property name="userName" value="Tim Lindquist"/>
+   <property name="serverHost" value="localhost"/>
+   <property name="serverPort" value="2020"/>
+   <property name="clientHost" value="localhost"/>
+   <property name="clientPort" value="2021"/>
+   <property name="src.dir" value="src/java"/>
+   <property name="dist.dir" value="bin"/>
+   <property name="build" value="classes"/>
+   <property environment="env"/>
+   <property name="user" value="${env.USERNAME}"/>
+
+   <target name="targets">
+      <echo message="Targets are clean, prepare, buildobjc, and targets"/>
+      <echo message="Execute objc client open ./MusicAppMac.app pooh.poly.asu.edu 2050"/>
+      <echo message="Default value for serverHost is: ${serverHost}"/>
+      <echo message="Default value for serverPort is: ${serverPort}"/>
+      <echo message="Default value for clientHost is: ${clientHost}"/>
+      <echo message="Default value for clientPort is: ${clientPort}"/>
+      <echo message="os is: ${os.name}"/>
+   </target>
+
+   <path id="compile.classpath">
+      <pathelement location="${build}"/>
+   </path>
+
+   <target name="prepare">
+      <mkdir dir="${build}" />
+   </target>
+
+   <target name="clean">
+      <delete dir="MusicAppMac.app" failonerror="false"/>
+      <delete dir="obj" failonerror="false"/>
+      <delete dir="${build}" failonerror="false"/>
+   </target>
+
+   <target name="buildobjc" depends="prepare">
+         <exec osfamily="windows"
+               executable="make">
+         </exec>
+         <exec osfamily="mac"
+               executable="./xcruncmd">
+         </exec>
+   </target>
+
+</project>

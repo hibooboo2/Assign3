@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "execute resulting app with> ./MusicAppMAC.app/Contents/MacOS/MusicAppMAC"
+echo "or just: open ./MusicAppMAC.app"
+echo compiling
+mkdir -p ./MusicAppMac.app/Contents/MacOS/
+cp Info.plist ./MusicAppMac.app/Contents/
+xcrun gcc -x objective-c -framework Foundation -framework AppKit -o MusicAppMac.app/Contents/MacOS/MusicAppMac src/objc/GuiController.h src/objc/GuiController.m src/objc/AppDelegate.h src/objc/AppDelegate.m src/objc/main.m
