@@ -101,7 +101,7 @@
 	musicDescription = [musicDescription stringByAppendingString:@"#"];
 	[connection sendBytes:[musicDescription UTF8String] OfLength:[musicDescription length]
                   Index:0];
-	[self refreshMD];
+	//[self refreshMD];
 	// NSOpenPanel *panel;
 	// NSString *path;
 	// panel = [NSOpenPanel openPanel];
@@ -116,7 +116,7 @@
 	musicDescription = [musicDescription stringByAppendingString:[[appDelegate titleCB] stringValue]];
 	[connection sendBytes:[musicDescription UTF8String] OfLength:[musicDescription length]
                   Index:0];
-	[self refreshMD];
+	//[self refreshMD];
 }
 
 - (void) refreshMD {
@@ -143,25 +143,21 @@
 }
 
 - (void) comboBoxSelectionDidChange: (NSNotification*)notification {
-   NSComboBox*titCB = [appDelegate titleCB];
-   NSString*selected = [titCB objectValueOfSelectedItem];
-   //[self debug:[NSString stringWithFormat:@"selected title: %s\n",
-   //                      [selected UTF8String]]];
 	char * buf = malloc(MAXDATASIZE);
 	NSString * command = @"getsong^";
-	command = [command stringByAppendingString: selected];
-   [connection sendBytes:[command UTF8String] OfLength:[command length]
-                  Index:0];
-				   [self debug:[NSString stringWithFormat:@"Before Recieve\n"]];
+	command = [command stringByAppendingString: [[appDelegate titleCB] objectValueOfSelectedItem]];
+   [connection sendBytes:[command UTF8String] OfLength:[command length] Index:0];
 	NSString *recieved = [connection receiveBytes: buf maxBytes:MAXDATASIZE beginAt:0];
 	NSArray *chunks = [recieved componentsSeparatedByString: @"$"];
+<<<<<<< HEAD:MY Assgn 3/SampleAssign3/src/objc/GuiController.m
 	 [self debug:[NSString stringWithFormat:@"Recieved\n"]];
 	  [self debug:[NSString stringWithFormat:[chunks objectAtIndex:0]]];
+=======
+>>>>>>> Fixed Display of songs:SampleAssign3/src/objc/GuiController.m
 	[[appDelegate albumTB] setStringValue:[chunks objectAtIndex:2]];
 	[[appDelegate authorTB] setStringValue:[chunks objectAtIndex:1]];
 	[[appDelegate titleCB] setStringValue:[chunks objectAtIndex:0]];
-	[self debug:[NSString stringWithFormat:@"selected title: %s\n",
-                         [recieved UTF8String]]];
+	[[appDelegate titleCB] reloadData];
 	// POPULATE FIELDS IS CURRENT
 }
 
