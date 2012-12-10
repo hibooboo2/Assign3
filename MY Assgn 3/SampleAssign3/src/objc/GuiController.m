@@ -154,9 +154,9 @@
                   Index:0];
 				   [self debug:[NSString stringWithFormat:@"Before Recieve\n"]];
 	NSString *recieved = [connection receiveBytes: buf maxBytes:MAXDATASIZE beginAt:0];
-	NSArray *chunks = recieved;
+	NSArray *chunks = [recieved componentsSeparatedByString: @"$"];
 	 [self debug:[NSString stringWithFormat:@"Recieved\n"]];
-	  [self debug:[NSString stringWithFormat:recieved]];
+	  [self debug:[NSString stringWithFormat:[chunks objectAtIndex:0]]];
 	[[appDelegate albumTB] setStringValue:[chunks objectAtIndex:2]];
 	[[appDelegate authorTB] setStringValue:[chunks objectAtIndex:1]];
 	[[appDelegate titleCB] setStringValue:[chunks objectAtIndex:0]];
